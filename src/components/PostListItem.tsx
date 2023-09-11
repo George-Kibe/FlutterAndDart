@@ -1,5 +1,5 @@
 import { Text, View, StyleSheet, Image, Pressable } from 'react-native';
-import { Post } from '@/types';
+import { Post } from '../types';
 import { FontAwesome } from '@expo/vector-icons';
 import { Link } from 'expo-router';
 
