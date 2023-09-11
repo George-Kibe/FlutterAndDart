@@ -1,6 +1,6 @@
 import { ScrollView, Text } from 'react-native';
 import posts from '../../../assets/data/posts.json';
-import PostListItem from '@/components/PostListItem';
+import PostListItem from '../../components/PostListItem';
 import { useLocalSearchParams } from 'expo-router';
 
 export default function PostDetailsScreen() {

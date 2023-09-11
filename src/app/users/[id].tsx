@@ -9,8 +9,8 @@ import {
 } from 'react-native';
 import userJson from '../../../assets/data/user.json';
 import { useLayoutEffect, useState } from 'react';
-import { User } from '@/types';
-import ExperienceListItem from '@/components/ExperienceListItem';
+import { User } from '../../types';
+import ExperienceListItem from '../../components/ExperienceListItem';
 
 export default function UserProfile() {
   const [user, setUser] = useState<User>(userJson);

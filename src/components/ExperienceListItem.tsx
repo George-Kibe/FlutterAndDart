@@ -1,4 +1,4 @@
-import { Experience } from '@/types';
+import { Experience } from '../types';
 import { Text, View, Image, StyleSheet } from 'react-native';
 
 type ExperienceListItemProps = {

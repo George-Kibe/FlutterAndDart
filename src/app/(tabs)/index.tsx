@@ -6,13 +6,14 @@ import { FlatList } from 'react-native';
 
 
 export default function HomeScreen() {
-  const post = posts[0];
   return (
     <View style={styles.container}>
       <FlatList
         data={posts}
         renderItem={({ item }) => <PostListItem post={item} />}
-        keyExtractor={(item) => item.id}
+        // keyExtractor={(item) => item.id}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ gap:10 }}
       />
     </View>
   );
@@ -21,11 +22,5 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
   },
 });

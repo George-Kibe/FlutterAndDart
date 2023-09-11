@@ -14,7 +14,7 @@ type FooterButtonProp = {
 
 function FooterButton({ text, icon }: FooterButtonProp) {
   return (
-    <View style={{ flexDirection: 'row' }}>
+    <View style={{ flexDirection: 'row', alignItems:"center" }}>
       <FontAwesome name={icon} size={16} color="gray" />
       <Text style={{ marginLeft: 5, color: 'gray', fontWeight: '500' }}>
         {text}
@@ -52,6 +52,7 @@ export default function PostListItem({ post }: PostListItemProps) {
         {/* Footer */}
         <View style={styles.footer}>
           <FooterButton text="Like" icon="thumbs-o-up" />
+          <FooterButton text="Repost" icon="retweet" />
           <FooterButton text="Comment" icon="comment-o" />
           <FooterButton text="Share" icon="share" />
         </View>
@@ -92,7 +93,7 @@ const styles = StyleSheet.create({
     marginTop: 0,
   },
   postImage: {
-    width: '100%',
+    width: '98%',
     aspectRatio: 1,
   },
 
