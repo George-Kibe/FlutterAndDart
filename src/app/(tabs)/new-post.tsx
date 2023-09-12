@@ -2,7 +2,7 @@ import { Pressable, StyleSheet, TextInput, Image } from 'react-native';
 import { Text, View } from '../../components/Themed';
 import { useNavigation, useRouter } from 'expo-router';
 import { useLayoutEffect, useState } from 'react';
-// import * as ImagePicker from 'expo-image-picker';
+import * as ImagePicker from 'expo-image-picker';
 import { FontAwesome } from '@expo/vector-icons';
 
 export default function NewPostScreen() {
@@ -15,7 +15,7 @@ export default function NewPostScreen() {
   const onPost = () => {
     console.warn(`Posting: ${content}`);
 
-    router.push('/(tabs)/');
+    router.push('/(tabs)/home');
     setContent('');
     setImage(null);
   };
@@ -32,19 +32,18 @@ export default function NewPostScreen() {
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
-    const result = "djfh"
-    // let result = await ImagePicker.launchImageLibraryAsync({
-    //   mediaTypes: ImagePicker.MediaTypeOptions.Images,
-    //   allowsEditing: true,
-    //   // aspect: [4, 3],
-    //   quality: 0.5,
-    // });
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      // aspect: [4, 3],
+      quality: 0.5,
+    });
 
     console.log(result);
 
-    // if (!result.canceled) {
-    //   setImage(result.assets[0].uri);
-    // }
+    if (!result.canceled) {
+      setImage(result.assets[0].uri);
+    }
   };
 
   return (
