@@ -1,5 +1,5 @@
 import { Text, View, StyleSheet, Image, Pressable } from 'react-native';
-import { User } from '@/types';
+import { User } from '../types';
 import { Link } from 'expo-router';
 
 type UserListItemProps = {
