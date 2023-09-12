@@ -50,6 +50,8 @@ function RootLayoutNav() {
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
+        <Stack.Screen name="posts/[id]" options={{ presentation: 'formSheet' }} />
+        <Stack.Screen name="users/[id]" options={{ presentation: 'formSheet' }} />
       </Stack>
     </ThemeProvider>
   );
