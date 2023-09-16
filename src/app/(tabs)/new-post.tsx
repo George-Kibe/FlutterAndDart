@@ -15,7 +15,7 @@ export default function NewPostScreen() {
   const onPost = () => {
     console.warn(`Posting: ${content}`);
 
-    router.push('/(tabs)/home');
+    router.push('/(tabs)/');
     setContent('');
     setImage(null);
   };
