@@ -4,6 +4,18 @@ import { useNavigation, useRouter } from 'expo-router';
 import { useLayoutEffect, useState } from 'react';
 import * as ImagePicker from 'expo-image-picker';
 import { FontAwesome } from '@expo/vector-icons';
+import { gql, useMutation } from '@apollo/client';
+
+const insertPost = gql`
+  mutation MyMutation($content: String, $image: String, $userId: ID) {
+    insertPost(content: $content, image: $image, userid: $userId) {
+      content
+      id
+      image
+      userid
+    }
+  }
+`;
 
 export default function NewPostScreen() {
   const [content, setContent] = useState('');
@@ -12,13 +24,20 @@ export default function NewPostScreen() {
   const navigation = useNavigation();
   const router = useRouter();
 
-  const onPost = () => {
-    console.warn(`Posting: ${content}`);
-
-    router.push('/(tabs)/');
-    setContent('');
-    setImage(null);
-  };
+  const [handleMutation, { loading, error, data }] = useMutation(insertPost);
+	
+	const onPost = async () => {
+	    console.warn(`Posting: ${content}`);
+	    try {
+	      await handleMutation({ variables: { content, userId: 1 } });
+	
+	      router.push('/(tabs)/');
+	      setContent('');
+	      setImage(null);
+	    } catch (e) {
+	      console.log(e);
+	    }
+	  };
 
   useLayoutEffect(() => {
     navigation.setOptions({

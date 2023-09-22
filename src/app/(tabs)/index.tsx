@@ -30,7 +30,7 @@ export default function HomeScreen() {
     return <Text>Something went wrong...</Text>;
   }
 
-	console.log(data.postList);
+	// console.log(data.postList);
   const posts = data.postList;
 	
   return (
