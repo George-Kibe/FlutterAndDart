@@ -36,7 +36,7 @@ export default function PostDetailsScreen() {
     return <Text>Something went wrong...</Text>;
   }
 
-	console.log(data);
+	// console.log(data);
   const post = data.post;
 
   if (!post) {

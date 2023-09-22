@@ -29,7 +29,7 @@ export default function NewPostScreen() {
 	const onPost = async () => {
 	    console.warn(`Posting: ${content}`);
 	    try {
-	      await handleMutation({ variables: { content, userId: 1 } });
+	      await handleMutation({ variables: { content, userId: 2 } });
 	
 	      router.push('/(tabs)/');
 	      setContent('');

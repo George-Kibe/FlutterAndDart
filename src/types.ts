@@ -19,6 +19,6 @@ export type User = {
 export type Experience = {
   id: string;
   title: string;
-  companyName: string;
-  companyImage?: string;
+  companyname: string;
+  companyimage?: string;
 };

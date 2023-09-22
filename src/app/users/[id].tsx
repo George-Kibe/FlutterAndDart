@@ -6,32 +6,64 @@ import {
   StyleSheet,
   Pressable,
   ScrollView,
+  ActivityIndicator,
 } from 'react-native';
-import userJson from '../../../assets/data/user.json';
+// import userJson from '../../../assets/data/user.json';
 import { useLayoutEffect, useState } from 'react';
 import { User } from '../../types';
 import ExperienceListItem from '../../components/ExperienceListItem';
+import { gql, useQuery } from '@apollo/client';
+
+const query = gql`
+  query MyQuery($id: ID!) {
+    profile(id:$id) {
+      id
+      name
+      image
+      position
+      about
+      experience {
+        id
+        companyname
+        companyimage
+        title
+        userid
+      }
+      backimage
+    }
+  }
+`;
 
 export default function UserProfile() {
-  const [user, setUser] = useState<User>(userJson);
-
+  // const [user, setUser] = useState<User>(userJson);
   const { id } = useLocalSearchParams();
+  const {loading, error, data} = useQuery(query, { variables: { id }});
+  // console.log(data);
+  const user = data?.profile;
+
   const navigation = useNavigation();
+  useLayoutEffect(() => {
+    navigation.setOptions({ title: user.name });
+  }, [user?.name]);
+
 
   const onConnect = () => {
     console.warn('Connect Pressed');
   };
+  if (loading) return <ActivityIndicator />;
+  if (error) {
+    console.log("Error: ", error);
+    return <Text>Something went wrong...</Text>;
+  }
 
-  useLayoutEffect(() => {
-    navigation.setOptions({ title: user.name });
-  }, [user?.name]);
+	
 
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       {/* Header */}
       <View style={styles.header}>
         {/* BG Image */}
-        <Image source={{ uri: user.backImage }} style={styles.backImage} />
+        <Image source={{ uri: user.backimage }} style={styles.backImage} />
 
         <View style={styles.headerContent}>
           {/* Profile image */}
