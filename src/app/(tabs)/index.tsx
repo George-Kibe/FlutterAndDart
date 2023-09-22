@@ -4,6 +4,7 @@ import { Text, View } from '../../components/Themed';
 // import posts from "../../../assets/data/posts.json"
 import { FlatList } from 'react-native';
 import { gql, useQuery } from '@apollo/client';
+import { useState } from 'react';
 
 const postList = gql`
   query postList {
@@ -20,9 +21,28 @@ const postList = gql`
     }
   }
 `;
+const postListPaginated = gql`
+  query postListPaginated($first: Int, $after: Int) {
+    postPaginatedList(first: $first, after: $after) {
+      id
+      image
+      content
+      profile {
+        image
+        id
+        name
+        position
+      }
+    }
+  }
+`;
 
 export default function HomeScreen() {
-  const { loading, error, data } = useQuery(postList);
+  const [hasMore, setHasMore] = useState(true)
+  // const { loading, error, data } = useQuery(postList);
+  const { loading, error, data, fetchMore } = useQuery(postListPaginated, { 
+    variables: { first: 10, after: 0 }
+  });
 
 	if (loading) return <ActivityIndicator />;
   if (error) {
@@ -31,16 +51,35 @@ export default function HomeScreen() {
   }
 
 	// console.log(data.postList);
-  const posts = data.postList;
-	
+  // const posts = data.postList;
+  const posts = data.postPaginatedList
+  const loadMore = async() => {
+    if(!hasMore){
+      console.warn("Nothing more to load")
+      return
+    }    
+    const response = await fetchMore({ variables: { after: data.postPaginatedList.length}})
+    if (response.data.postPaginatedList.length === 0 ) {
+      setHasMore(false)
+    }
+    // console.log("response: ", response.data.postPaginatedList)
+  }
   return (
     <View style={styles.container}>
       <FlatList
         data={posts}
         renderItem={({ item }) => <PostListItem post={item} />}
-        // keyExtractor={(item) => item.id}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ gap:10 }}
+        onEndReached={loadMore}
+        ListFooterComponent={() => (
+          <Text
+            onPress={loadMore}
+            style={{ textAlign: 'center', fontSize: 16, fontWeight: '600' }}
+          >
+            Load More
+          </Text>
+        )}
       />
     </View>
   );
