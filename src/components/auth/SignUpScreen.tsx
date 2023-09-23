@@ -51,7 +51,7 @@ export default function SignUpScreen() {
   };
  
   return (
-    <SafeAreaView style={{flex:1, justifyContent:'center', alignItems:'center', padding:30}}>
+    <View style={styles.container}>
       {!pendingVerification && (
         <View style={{width: "100%"}}>
           <View>
@@ -89,6 +89,9 @@ export default function SignUpScreen() {
       )}
       {pendingVerification && (
         <View style={{width: "80%"}}>
+            <Text style={{fontSize:16, marginBottom:20}}>
+                Please check your email for the verification code.
+            </Text>
           <View>
             <TextInput
               value={code}
@@ -102,37 +105,42 @@ export default function SignUpScreen() {
           </TouchableOpacity>
         </View>
       )}
-    </SafeAreaView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
+    container: {
+      justifyContent:'center',
+      alignItems:'center', 
+      padding:30
+    },
     registerInput: {
-        borderColor: "gray",
-        borderWidth: 1,
-        borderRadius: 5,
-        padding: 5,
-        marginBottom: 10,
+      borderColor: "gray",
+      borderWidth: 1,
+      borderRadius: 5,
+      padding: 5,
+      marginBottom: 10,
     },
     registerButton: {
-        backgroundColor: "royalblue",
-        padding: 10,
-        borderRadius: 5,
-        width: "100%",
-        marginBottom: 10,
+      backgroundColor: "royalblue",
+      padding: 10,
+      borderRadius: 5,
+      width: "100%",
+      marginBottom: 10,
     },
     verifyInput: {
-        borderColor: "gray",
-        borderWidth: 1,
-        borderRadius: 5,
-        padding: 5,
-        marginBottom: 10,
+      borderColor: "gray",
+      borderWidth: 1,
+      borderRadius: 5,
+      padding: 5,
+      marginBottom: 10,
     },
     verifyButton: {
-        backgroundColor: "royalblue",
-        padding: 10,
-        borderRadius: 5,
-        width: "100%",
-        marginBottom: 10,
+      backgroundColor: "royalblue",
+      padding: 10,
+      borderRadius: 5,
+      width: "100%",
+      marginBottom: 10,
     }
 })

@@ -7,7 +7,7 @@ import { useColorScheme } from 'react-native';
 import { ApolloProvider } from '@apollo/client';
 import client from '../apollo/Client';
 import { ClerkProvider, SignedIn, SignedOut } from '@clerk/clerk-expo';
-import SignUpScreen from '../components/auth/SignUpScreen';
+import AuthScreen from '../components/auth/AuthScreen';
 
 const CLERK_PUBLISHABLE_KEY = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY || "";
 // console.log(CLERK_PUBLISHABLE_KEY)
@@ -65,7 +65,7 @@ function RootLayoutNav() {
             </Stack>
           </SignedIn>
           <SignedOut>
-            <SignUpScreen />
+            <AuthScreen />
           </SignedOut>          
         </ThemeProvider>
       </ApolloProvider>
