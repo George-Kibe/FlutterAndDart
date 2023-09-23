@@ -8,10 +8,28 @@ import { ApolloProvider } from '@apollo/client';
 import client from '../apollo/Client';
 import { ClerkProvider, SignedIn, SignedOut } from '@clerk/clerk-expo';
 import AuthScreen from '../components/auth/AuthScreen';
+import * as SecureStore from "expo-secure-store";
+import UserContextProvider, { useUserContext } from '../context/UserContext';
 
 const CLERK_PUBLISHABLE_KEY = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY || "";
 // console.log(CLERK_PUBLISHABLE_KEY)
-
+const tokenCache = {
+  getToken(key: string) {
+    try {
+      return SecureStore.getItemAsync(key);
+    } catch (err) {
+      return null;
+    }
+  },
+  saveToken(key: string, value: string) {
+    try {
+      return SecureStore.setItemAsync(key, value);
+    } catch (err) {
+      return null;
+    }
+  },
+};
+ 
 export {
   // Catch any errors thrown by the Layout component.
   ErrorBoundary,
@@ -46,29 +64,41 @@ export default function RootLayout() {
     return null;
   }
 
-  return <RootLayoutNav />;
+  return <RootLayoutNavWithProps />;
 }
-
-function RootLayoutNav() {
+function RootLayoutNavWithProps() {
   const colorScheme = useColorScheme();
 
   return (
-    <ClerkProvider publishableKey={CLERK_PUBLISHABLE_KEY}>
+    <ClerkProvider publishableKey={CLERK_PUBLISHABLE_KEY} tokenCache={tokenCache}>
       <ApolloProvider client={client}>
-        <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-          <SignedIn>
-            <Stack>
-              <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-              <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
-              <Stack.Screen name="posts/[id]" options={{ presentation: 'formSheet' }} />
-              <Stack.Screen name="users/[id]" options={{ presentation: 'formSheet' }} />
-            </Stack>
-          </SignedIn>
-          <SignedOut>
-            <AuthScreen />
-          </SignedOut>          
-        </ThemeProvider>
+        <UserContextProvider>
+          <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+            <RootLayoutNav />         
+          </ThemeProvider>
+        </UserContextProvider>
       </ApolloProvider>
     </ClerkProvider>
+  );
+}
+
+
+function RootLayoutNav() {
+  const {dbUser, authUser } = useUserContext();
+  console.log("Auth User: ", dbUser)
+  return (
+    <>
+      <SignedIn>
+        <Stack>
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
+          <Stack.Screen name="posts/[id]" options={{ presentation: 'formSheet' }} />
+          <Stack.Screen name="users/[id]" options={{ presentation: 'formSheet' }} />
+        </Stack>
+      </SignedIn>
+      <SignedOut>
+        <AuthScreen />
+      </SignedOut>          
+    </>
   );
 }
