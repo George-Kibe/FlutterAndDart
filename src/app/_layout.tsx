@@ -3,7 +3,7 @@ import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native
 import { useFonts } from 'expo-font';
 import { SplashScreen, Stack } from 'expo-router';
 import { useEffect } from 'react';
-import { useColorScheme } from 'react-native';
+import { ActivityIndicator, useColorScheme } from 'react-native';
 import { ApolloProvider } from '@apollo/client';
 import client from '../apollo/Client';
 import { ClerkProvider, SignedIn, SignedOut } from '@clerk/clerk-expo';
@@ -83,10 +83,15 @@ function RootLayoutNavWithProps() {
   );
 }
 
-
 function RootLayoutNav() {
-  const {dbUser, authUser } = useUserContext();
-  console.log("Auth User: ", authUser)
+  const {dbUser, loading } = useUserContext();
+  console.log("Db User: ", dbUser)
+  console.log("Loading status: ", loading)
+  // if (loading) {
+  //   return (
+  //     <ActivityIndicator />
+  //   );
+  // }
   return (
     <>
       <SignedIn>
