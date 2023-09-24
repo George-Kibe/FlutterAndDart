@@ -4,7 +4,7 @@ import { useUser } from "@clerk/clerk-expo";
 const UserContext = createContext<any>(null);
 
 const UserContextProvider = ({children}) => {
-    const authUser = useUser();
+    const {user: authUser} = useUser();
     const dbUser = null;
 
     return(

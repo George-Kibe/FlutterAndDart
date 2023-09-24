@@ -10,6 +10,7 @@ import { ClerkProvider, SignedIn, SignedOut } from '@clerk/clerk-expo';
 import AuthScreen from '../components/auth/AuthScreen';
 import * as SecureStore from "expo-secure-store";
 import UserContextProvider, { useUserContext } from '../context/UserContext';
+import SetupProfileScreen from '../components/auth/SetupProfileScreen';
 
 const CLERK_PUBLISHABLE_KEY = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY || "";
 // console.log(CLERK_PUBLISHABLE_KEY)
@@ -85,16 +86,20 @@ function RootLayoutNavWithProps() {
 
 function RootLayoutNav() {
   const {dbUser, authUser } = useUserContext();
-  console.log("Auth User: ", dbUser)
+  console.log("Auth User: ", authUser)
   return (
     <>
       <SignedIn>
-        <Stack>
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
-          <Stack.Screen name="posts/[id]" options={{ presentation: 'formSheet' }} />
-          <Stack.Screen name="users/[id]" options={{ presentation: 'formSheet' }} />
-        </Stack>
+        {!dbUser ?(<SetupProfileScreen />):
+        (
+          <Stack>
+            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+            <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
+            <Stack.Screen name="posts/[id]" options={{ presentation: 'formSheet' }} />
+            <Stack.Screen name="users/[id]" options={{ presentation: 'formSheet' }} />
+          </Stack>
+        )}
+        
       </SignedIn>
       <SignedOut>
         <AuthScreen />
