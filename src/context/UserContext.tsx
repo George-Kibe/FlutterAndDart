@@ -30,7 +30,8 @@ const UserContextProvider = ({children}) => {
     
     const dbUser = data?.profileUsingprofile_authid_key;
 
-    const loading = isDbLoading || !isAuthLoaded;
+    // const loading = isDbLoading || !isAuthLoaded;
+    const loading = isDbLoading
     
     return(
         <UserContext.Provider value={{ dbUser, authUser, loading, reloadDbUser: refetch }} >

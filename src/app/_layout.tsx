@@ -11,6 +11,7 @@ import AuthScreen from '../components/auth/AuthScreen';
 import * as SecureStore from "expo-secure-store";
 import UserContextProvider, { useUserContext } from '../context/UserContext';
 import SetupProfileScreen from '../components/auth/SetupProfileScreen';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const CLERK_PUBLISHABLE_KEY = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY || "";
 // console.log(CLERK_PUBLISHABLE_KEY)
@@ -85,13 +86,16 @@ function RootLayoutNavWithProps() {
 
 function RootLayoutNav() {
   const {dbUser, loading } = useUserContext();
-  console.log("Db User: ", dbUser)
-  console.log("Loading status: ", loading)
-  // if (loading) {
-  //   return (
-  //     <ActivityIndicator />
-  //   );
-  // }
+  // console.log("Db User: ", dbUser)
+  // console.log("Loading status: ", loading)
+  
+  if (loading) {
+    return (
+      <SafeAreaView style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <ActivityIndicator />
+      </SafeAreaView>      
+    );
+  }
   return (
     <>
       <SignedIn>
