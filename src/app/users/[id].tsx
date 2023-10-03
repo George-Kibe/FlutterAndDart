@@ -43,7 +43,7 @@ export default function UserProfile() {
 
   const navigation = useNavigation();
   useLayoutEffect(() => {
-    navigation.setOptions({ title: user.name });
+    navigation.setOptions({ title: user?.name });
   }, [user?.name]);
 
 

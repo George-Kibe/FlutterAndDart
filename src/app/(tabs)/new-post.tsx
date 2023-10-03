@@ -6,6 +6,7 @@ import * as ImagePicker from 'expo-image-picker';
 import { FontAwesome } from '@expo/vector-icons';
 import { gql, useMutation } from '@apollo/client';
 import { useUserContext } from '../../context/UserContext';
+import { uploadImageToS3 } from '../utils/uploadImageToS3';
 
 const insertPost = gql`
   mutation MyMutation($content: String, $image: String, $userId: ID) {
@@ -31,8 +32,7 @@ export default function NewPostScreen() {
 	const onPost = async () => {
 	    console.warn(`Posting: ${content}`);
 	    try {
-	      await handleMutation({ variables: { content, userId: dbUser.id } });
-	
+	      await handleMutation({ variables: { content, userId: dbUser.id, image } });	
 	      router.push('/(tabs)/');
 	      setContent('');
 	      setImage(null);
@@ -59,11 +59,24 @@ export default function NewPostScreen() {
       // aspect: [4, 3],
       quality: 0.5,
     });
-
-    console.log(result);
+    const { assets } = result;
+    if(result.canceled || assets.length < 1){
+      return
+    }
+    // for (let i = 0; i < assets.length; i++) {
+    //   // console.log(assets[i])
+    const {uri:url, type: mimetype} = assets[0]
+    const parts = url.split(".");
+    const ext = parts[parts.length-1];
+      // const filename = parts[0];
+    const uploadUrl = await uploadImageToS3(url, mimetype, ext);
+    console.log("S3 Image Url: ",uploadUrl)
+      // uploadedFiles.push(uploadUrl)
+    // }
 
     if (!result.canceled) {
-      setImage(result.assets[0].uri);
+      setImage(uploadUrl)
+      // setImage(result.assets[0].uri);
     }
   };
 

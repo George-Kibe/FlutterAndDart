@@ -89,13 +89,13 @@ function RootLayoutNav() {
   // console.log("Db User: ", dbUser)
   // console.log("Loading status: ", loading)
   
-  if (loading) {
-    return (
-      <SafeAreaView style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-        <ActivityIndicator />
-      </SafeAreaView>      
-    );
-  }
+  // if (loading) {
+  //   return (
+  //     <SafeAreaView style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+  //       <ActivityIndicator />
+  //     </SafeAreaView>      
+  //   );
+  // }
   return (
     <>
       <SignedIn>
