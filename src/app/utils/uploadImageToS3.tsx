@@ -1,7 +1,7 @@
 import { RNS3 } from 'react-native-aws3';
 //function to upload images to s3 bucket
-const S3_ACCESS_KEY="AKIARHT4T6CNQKLH5ZSO"
-const S3_SECRET_ACCESS_KEY="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"
+const S3_ACCESS_KEY=""
+const S3_SECRET_ACCESS_KEY=""
 const bucket ="buenare-images-bucket"
 // const S3_ACCESS_KEY=process.env.EXPO_PUBLIC_S3_ACCESS_KEY || "";
 // const S3_SECRET_ACCESS_KEY=process.env.EXPO_PUBLIC_S3_SECRET_ACCESS_KEY || "";
