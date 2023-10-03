@@ -6,7 +6,7 @@ import * as ImagePicker from 'expo-image-picker';
 import { FontAwesome } from '@expo/vector-icons';
 import { gql, useMutation } from '@apollo/client';
 import { useUserContext } from '../../context/UserContext';
-import { uploadImageToS3 } from '../utils/uploadImageToS3';
+import { uploadImageToS3 } from '../../utils/uploadImageToS3';
 
 const insertPost = gql`
   mutation MyMutation($content: String, $image: String, $userId: ID) {
@@ -79,6 +79,7 @@ export default function NewPostScreen() {
       // setImage(result.assets[0].uri);
     }
   };
+  console.log("Image: ",image, "Content: ",content)
 
   return (
     <View style={styles.container}>
